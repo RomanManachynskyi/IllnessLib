@@ -1,0 +1,183 @@
+---
+openapi: 3.0.0
+info:
+  title: IllnessLib Progect
+  description: ""
+  version: 1.0.2
+servers:
+- url: https://virtserver.swaggerhub.com/ROMANMANACHYNSKYI/IllnessLib/1.0.2
+  description: SwaggerHub API Auto Mocking
+paths:
+  /Doctor/InitialInformation:
+    get:
+      responses:
+        "200":
+          description: List of Appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DoctorInitialInformation'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: User is not autorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "403":
+          description: User is not allowed for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    DoctorInitialInformation:
+      type: object
+      properties:
+        Initials:
+          $ref: '#/components/schemas/Initials'
+        Time:
+          $ref: '#/components/schemas/Time'
+        Data:
+          $ref: '#/components/schemas/Data'
+        Symptomes:
+          $ref: '#/components/schemas/Symptomes'
+        PatientID:
+          $ref: '#/components/schemas/PatientID'
+    Initials:
+      type: object
+      properties:
+        FirstName:
+          maxLength: 100
+          minLength: 2
+          type: string
+          example: Roman
+        MidleName:
+          maxLength: 100
+          minLength: 2
+          type: string
+          example: Manachynskyi
+        LastName:
+          maxLength: 100
+          minLength: 2
+          type: string
+          example: Pavlovych
+    Time:
+      type: number
+      example: 840
+    Data:
+      type: object
+      properties:
+        Day:
+          maximum: 31
+          minimum: 1
+          type: number
+          example: 19
+        Month:
+          maxLength: 9
+          minLength: 3
+          type: string
+          example: November
+        Year:
+          maxLength: 4
+          minLength: 4
+          type: number
+          example: 2022
+    Symptomes:
+      type: array
+      example: Cough, runny nose, sore throat
+      items:
+        type: string
+    PatientID:
+      type: number
+      example: 123456
+    inline_response_400:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        message:
+          type: string
+        errorDescription:
+          type: string
+        errorKey:
+          type: string
+          example: NODE.METHOD.FAIL
+    inline_response_401:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 401
+    inline_response_403:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 403
+    inline_response_404:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 404
+  responses:
+    DoctorInitialInformation:
+      description: List of Appointments
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DoctorInitialInformation'
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_400'
+    Unauthorized:
+      description: User is not autorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_401'
+    Forbidden:
+      description: User is not allowed for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_403'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_404'
+    InternalServerError:
+      description: Internal server error
+      content:
+        text/plain:
+          schema:
+            type: string
